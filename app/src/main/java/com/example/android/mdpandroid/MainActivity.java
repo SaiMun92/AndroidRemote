@@ -936,11 +936,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         switch (item.getItemId()) {
             case R.id.action_bluetooth:
 <<<<<<< HEAD
+<<<<<<< HEAD
                 // Launch the DeviceListActivity to see devices and do scan
                 serverIntent = new Intent(this, DeviceListActivity.class);
                 startActivityForResult(serverIntent,REQUEST_CONNECT_DEVICE_INSECURE);
                 break;
 =======
+=======
+>>>>>>> origin/master
                 Intent intent = new Intent(this, BluetoothMainActivity.class);
                 startActivity(intent);
 

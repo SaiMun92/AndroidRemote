@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- Copyright (C) 2009 The Android Open Source Project
 =======
 <!-- Copyright (C) 2014 The Android Open Source Project
 >>>>>>> dd471872ddd3820d0b438dfe09bca1cf31bec0ab
+=======
+<!-- Copyright (C) 2014 The Android Open Source Project
+>>>>>>> origin/master
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -19,15 +23,21 @@
 -->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
 <<<<<<< HEAD
+<<<<<<< HEAD
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textSize="18sp"
     android:padding="5dp"
 />
 =======
+=======
+>>>>>>> origin/master
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:padding="5dp"
           android:textSize="18sp"
     />
+<<<<<<< HEAD
 >>>>>>> dd471872ddd3820d0b438dfe09bca1cf31bec0ab
+=======
+>>>>>>> origin/master
