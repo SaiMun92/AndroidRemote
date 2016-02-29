@@ -13,6 +13,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -41,9 +43,14 @@ import android.hardware.SensorEventListener;
 import android.view.MotionEvent;
 import android.view.View.OnTouchListener;
 import android.widget.RelativeLayout;
+
+import com.example.android.mdpandroid.Bluetooth.BluetoothMainActivity;
+import com.example.android.mdpandroid.Bluetooth.BluetoothService;
+import com.example.android.mdpandroid.Bluetooth.DeviceListActivity;
+
 import java.util.ArrayList;
 
-public class MainActivity extends Activity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     // Message types sent from the BluetoothChatService Handler
     public static final int MESSAGE_STATE_CHANGE = 1;
@@ -136,9 +143,7 @@ public class MainActivity extends Activity implements SensorEventListener {
                     mConversationArrayAdapter.add("Me:  " + writeMessage);  //the message that appears on top of the "send" button
                     mOutEditText.setText("");
                     break;
-                case MESSAGE_READ:
-                    byte[] readBuf = (byte[]) msg.obj;                      //the status of the robotView
-                    // construct a string from the valid bytes in the buffer
+                case MESSAGE_READ:// construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     TextView text = (TextView) findViewById(R.id.tb_status);
 
@@ -201,7 +206,8 @@ public class MainActivity extends Activity implements SensorEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
         // ----------------------------JoyStick----------------------------------
         layout_joystick = (RelativeLayout) findViewById(R.id.layout_joystick);
@@ -549,7 +555,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         mOutStringBuffer = new StringBuffer("");
 
         //Initialise Explore and Shortest Path btn
-        exploreButton = (Button) findViewById(R.id.btn_explore);
+        exploreButton = (Button) findViewById(R.id.explore);
         exploreButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -557,7 +563,7 @@ public class MainActivity extends Activity implements SensorEventListener {
             }
         });
 
-        runshortestButton = (Button) findViewById(R.id.btn_run);
+        runshortestButton = (Button) findViewById(R.id.runButton);
         runshortestButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -591,7 +597,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         });
         */
 
-        tiltToggle = (ToggleButton) findViewById(R.id.tilt_toogle);
+        tiltToggle = (ToggleButton) findViewById(R.id.tilt_toggle);
         tiltToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -932,12 +938,28 @@ public class MainActivity extends Activity implements SensorEventListener {
                 return true;
 
             case R.id.action_bluetooth:
-                Intent intent = new Intent(this, BluetoothSettings.class);
+                Intent intent = new Intent(this, BluetoothMainActivity.class);
                 startActivity(intent);
 
                 // as a favorite...
                 return true;
-
+            case R.id.secure_connect_scan: {
+                // Launch the DeviceListActivity to see devices and do scan
+                Intent serverIntent = new Intent(getApplicationContext(), DeviceListActivity.class);
+                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
+                return true;
+            }
+            case R.id.insecure_connect_scan: {
+                // Launch the DeviceListActivity to see devices and do scan
+                Intent serverIntent = new Intent(getApplicationContext(), DeviceListActivity.class);
+                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
+                return true;
+            }
+            case R.id.discoverable: {
+                // Ensure this device is discoverable by others
+                ensureDiscoverable();
+                return true;
+            }
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -1013,6 +1035,18 @@ public class MainActivity extends Activity implements SensorEventListener {
             displayView(position);  //position is an int
         }
     }
+    /**
+     * Makes this device discoverable.
+     */
+    private void ensureDiscoverable() {
+        if (mBluetoothAdapter.getScanMode() !=
+                BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+            startActivity(discoverableIntent);
+        }
+    }
+
 }
 
 
