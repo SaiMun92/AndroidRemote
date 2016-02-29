@@ -1,16 +1,33 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.mdpandroid.MainActivity">
 
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
+        android:orderInCategory="100"
         android:id="@+id/action_bluetooth"
         android:icon="@drawable/ic_bluetooth_black_48dp"
-        android:title="Bluetooth"
+        android:title="@string/action_bluetooth"
         app:showAsAction="ifRoom"/>
 
     <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/secure_connect_scan"
+        android:icon="@drawable/ic_up_arrow"
+        android:title="@string/secure_connect"/>
+
+    <item
+        android:id="@+id/insecure_connect_scan"
+        android:title="@string/insecure_connect"/>
+
+    <item
+        android:id="@+id/discoverable"
+        android:title="@string/discoverable"/>
+
 
 </menu>

@@ -11,6 +11,7 @@
             android:orientation="vertical"
             tools:context=".MainActivity"
             android:weightSum="1"
+            android:id="@+id/content_frame"
             android:background="#817575">
 
             <android.support.v7.widget.Toolbar
@@ -21,8 +22,6 @@
                 android:elevation="4dp"
                 android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
-
 
             <LinearLayout
                 android:orientation="vertical"
@@ -142,7 +141,7 @@
                 <ListView
                     android:id="@+id/chat_log"
                     android:layout_width="200dp"
-                    android:layout_height="80dp"
+                    android:layout_height="150dp"
                     android:layout_gravity="fill_horizontal"
                     android:layout_below="@+id/robotHead"
                     android:stackFromBottom="true"
